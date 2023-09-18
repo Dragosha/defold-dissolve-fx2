@@ -8,9 +8,9 @@
 -- local dissolve_fx = require("dissolve_fx.dissolve_fx")
 -- 
 -- function init(self)
---     dissolve_fx.init("#sprite", "noise", 1) -- args: sprite component with dissolve material, noise image name, scale of noise texture
+--     dissolve_fx.init("#sprite", "noise", 1) -- args: sprite component with dissolve material, noise image name, a scale of the noise texture
 --     go.set("#sprite", "dissolve.z", 0.25) -- size of the fire. Adjust subjectively to your eye!
---     go.set("/obj#logo", "glow_color", vmath.vector4(0.0, 0.5, 1.0, 0)) -- color of the fx (R 1.0, G 0.5, B 0.0 - default value)
+--     go.set("#sprite", "glow_color", vmath.vector4(0.0, 0.5, 1.0, 0)) -- color of the fx (R 1.0, G 0.5, B 0.0 - default value)
 --     go.set("#sprite", "dissolve.w", 0.0) -- to control the fx, 0.0 - 1.0, (0.0 is turn off, doesn't calculate in the shader)
 -- 
 --     -- Play the FX in the loop
