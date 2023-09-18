@@ -1,13 +1,17 @@
 images {
-  image: "/example/assets/images/logo.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/example/assets/dissolve/ramp.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
   image: "/example/assets/dissolve/noise.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/example/assets/cards/card.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/example/assets/cards/zero.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/example/assets/DissolvePattern.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 0

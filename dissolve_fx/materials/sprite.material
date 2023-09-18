@@ -38,11 +38,11 @@ fragment_constants {
   }
 }
 fragment_constants {
-  name: "ramp_uvrect"
+  name: "glow_color"
   type: CONSTANT_TYPE_USER
   value {
-    x: 0.0
-    y: 0.0
+    x: 1.0
+    y: 0.5
     z: 0.0
     w: 0.0
   }

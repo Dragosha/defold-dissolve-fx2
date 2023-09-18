@@ -8,9 +8,10 @@
 -- local dissolve_fx = require("dissolve_fx.dissolve_fx")
 -- 
 -- function init(self)
---     dissolve_fx.init("#sprite", "noise", "ramp") -- args: sprite component with dissolve material, noise image name, ramp image name.
+--     dissolve_fx.init("#sprite", "noise", 1) -- args: sprite component with dissolve material, noise image name, scale of noise texture
 --     go.set("#sprite", "dissolve.z", 0.25) -- size of the fire. Adjust subjectively to your eye!
---     go.set("#sprite", "dissolve.w", 0.0) -- to control the fx, 0.0 - 1.0
+--     go.set("/obj#logo", "glow_color", vmath.vector4(0.0, 0.5, 1.0, 0)) -- color of the fx (R 1.0, G 0.5, B 0.0 - default value)
+--     go.set("#sprite", "dissolve.w", 0.0) -- to control the fx, 0.0 - 1.0, (0.0 is turn off, doesn't calculate in the shader)
 -- 
 --     -- Play the FX in the loop
 --     go.animate("#sprite", "dissolve.w", go.PLAYBACK_LOOP_PINGPONG, 1, go.EASING_LINEAR, 3)
@@ -19,11 +20,12 @@
 
 local M = {}
 
-function M.find_uvrect(sprite_url, image_id)
+function M.find_uvrect(sprite_url, image_id, scale)
     assert(type(image_id) == "string", "`image_id` should be a string")
     local atlas = go.get(sprite_url, "image")
     local atlas_data = resource.get_atlas(atlas)
     local tex_info = resource.get_texture_info(atlas_data.texture)
+    local scale = scale or 1
 
     local image_num
     for i, animation in ipairs(atlas_data.animations) do
@@ -53,13 +55,12 @@ function M.find_uvrect(sprite_url, image_id)
 
     return (position_x + width/2) / tex_w,         -- x + w/2
         (tex_h - (position_y + height/2)) / tex_h, -- y + h/2
-        width / tex_w,                             -- w
-        height / tex_h                             -- h
+        width / tex_w / scale ,                          -- w
+        height / tex_h / scale                           -- h
 end
 
-function M.init(sprite_url, noise_image, ramp_image)
-    go.set(sprite_url, "noise_uvrect", vmath.vector4(M.find_uvrect(sprite_url, noise_image)))
-    go.set(sprite_url, "ramp_uvrect", vmath.vector4(M.find_uvrect(sprite_url, ramp_image)))
+function M.init(sprite_url, noise_image, scale)
+    go.set(sprite_url, "noise_uvrect", vmath.vector4(M.find_uvrect(sprite_url, noise_image, scale)))
 end
 
 return M

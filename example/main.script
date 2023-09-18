@@ -2,18 +2,20 @@ local dissolve_fx = require("dissolve_fx.dissolve_fx")
 
 local function play_dissolve()
     go.set("/obj#logo", "dissolve.w", 0.0) -- initial value
-    go.animate("/obj#logo", "dissolve.w", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_LINEAR, 1.25, 0.25, function ()
-        go.animate("/obj#logo", "dissolve.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 1.25, 0.5, play_dissolve)
+    go.animate("/obj#logo", "dissolve.w", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_INQUAD, .7, 0.25, function ()
+        go.animate("/obj#logo", "dissolve.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_INQUAD, 1, 1, play_dissolve)
     end)
+    -- go.animate("/obj#logo", "dissolve.w", go.PLAYBACK_LOOP_FORWARD, 1, go.EASING_LINEAR, 1)
 end
 
 function init(self)
     msg.post(".", "acquire_input_focus")
     msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 
-    dissolve_fx.init("/obj#logo", "noise", "ramp") -- args: sprite component with dissolve material, noise image name, ramp image name.
+    dissolve_fx.init("/obj#logo", "DissolvePattern", 1.5) -- args: sprite component with dissolve material, noise image name, ramp image name.
     go.set("/obj#logo", "dissolve.z", 0.25) -- size of the burn
-    go.set("/obj#logo", "dissolve.w", 0.0) -- to control the fx, 0.0 - 1.0
+    go.set("/obj#logo", "glow_color", vmath.vector4(0.8, 0.5, 0.1, 0)) -- color of the fx (R 1.0, G 0.5, B 0.0 - default value)
+    go.set("/obj#logo", "dissolve.w", 0.0) -- to control the fx, 0.0 - 1.0, (0.0 is turn off, doesn't calculate in the shader)
 
     play_dissolve()
 end

@@ -1,6 +1,6 @@
 [project]
 title = dissolve_fx_demo
-developer = Indiesoft LLC
+developer = Indiesoft LLC, Dragosha
 
 [bootstrap]
 main_collection = /example/main.collectionc
