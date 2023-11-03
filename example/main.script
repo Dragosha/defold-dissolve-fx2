@@ -13,7 +13,7 @@ function init(self)
     msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 
     local sprite_url = "/obj#logo"
-    dissolve_fx.init(sprite_url, "DissolvePattern", 1.5) -- args: sprite component with dissolve material, noise image name, ramp image name.
+    dissolve_fx.init(sprite_url, "DissolvePattern", 1.5 , "stretch") -- args: sprite component with dissolve material, noise image name, a scale of the noise texture.
     go.set(sprite_url, "dissolve.z", 0.25) -- size of the burn
     go.set(sprite_url, "glow_color", vmath.vector4(0.8, 0.5, 0.1, 0)) -- color of the fx (R 1.0, G 0.5, B 0.0 - default value)
     go.set(sprite_url, "dissolve.w", 0.0) -- to control the fx, 0.0 - 1.0, (0.0 is turn off, doesn't calculate in the shader)

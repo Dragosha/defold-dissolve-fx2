@@ -20,8 +20,9 @@
 
 local M = {}
 
-function M.find_uvrect(sprite_url, image_id, scale)
+function M.find_uvrect(sprite_url, image_id, scale, scale_mode)
     assert(type(image_id) == "string", "`image_id` should be a string")
+    local scale_mode = scale_mode or "stretch"
     local atlas = go.get(sprite_url, "image")
     local atlas_data = resource.get_atlas(atlas)
     local tex_info = resource.get_texture_info(atlas_data.texture)
@@ -53,10 +54,29 @@ function M.find_uvrect(sprite_url, image_id, scale)
         height = uvs[6] - uvs[2]
     end
 
+    local w = width / tex_w / scale
+    local h = height / tex_h / scale
+
+    local sprite_image_id = go.get(sprite_url, "animation")
+    for _, animation in ipairs(atlas_data.animations) do
+        if hash(animation.id) == sprite_image_id then
+            if scale_mode == "stretch" then
+                w = w / animation.width
+                h = h / animation.height
+            else -- cover
+                local max = math.max(animation.width, animation.height)
+                w = w / max
+                h = h / max
+            end
+            break
+        end
+    end
+    
+    
     return (position_x + width/2) / tex_w,         -- x + w/2
         (tex_h - (position_y + height/2)) / tex_h, -- y + h/2
-        width / tex_w / scale ,                          -- w
-        height / tex_h / scale                           -- h
+        w ,                                        -- w
+        h                                          -- h
 end
 
 function M.init(sprite_url, noise_image, scale)
